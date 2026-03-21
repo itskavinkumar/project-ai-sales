@@ -141,6 +141,7 @@ class EmailInput(BaseModel):
     lead_score: float
     quote_value: float
     item_count: int
+    customer_email: Optional[str] = ""
     industry: Optional[Industry] = Industry.OTHER
     segment: Optional[Segment] = Segment.GENERAL
     use_case_id: Optional[str] = None

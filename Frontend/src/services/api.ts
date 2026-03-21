@@ -55,6 +55,7 @@ export interface LeadScoreResponse {
 
 export interface EmailInput {
     customer_name: string;
+    customer_email?: string;
     lead_score: number;
     quote_value: number;
     item_count: number;

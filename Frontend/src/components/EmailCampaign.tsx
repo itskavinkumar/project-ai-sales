@@ -112,6 +112,7 @@ export default function EmailCampaign() {
         try {
             const result = await apiService.generateEmail({
                 customer_name: customerName,
+                customer_email: customerEmail,
                 lead_score: leadScore,
                 quote_value: quoteValue,
                 item_count: itemCount,

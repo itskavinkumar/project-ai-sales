@@ -215,7 +215,8 @@ def generate_email_llm(data: EmailInput):
         lead_score=data.lead_score,
         quote_value=data.quote_value,
         item_count=data.item_count,
-        use_case_id=data.use_case_id
+        use_case_id=data.use_case_id,
+        customer_email=data.customer_email
     )
 
     return {
