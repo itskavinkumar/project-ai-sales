@@ -1,0 +1,201 @@
+company_name,email,job_role,quote_value,item_count,conversion_days,past_engagements,industry
+BioMaxTechnologies,vp@biomaxtechnologies.com,VP Sales,212337,155,89,4,Healthcare
+UniversityProTechnologies,chief@universityprotechnologies.com,Chief Technology Officer,120769,191,44,7,Education
+CyberTechGroup,chief@cybertechgroup.com,Chief Executive Officer,459765,234,63,14,Technology
+CyberPlusSolutions,vp@cyberplussolutions.com,VP Engineering,81551,97,65,2,Technology
+AIPlusInc,manager@aiplus.com,Manager,289629,496,23,3,Technology
+CyberPlusIndustries,vp@cyberplusindustries.com,VP Engineering,160510,121,50,3,Technology
+AutoStarPartners,vp@autostarpartners.com,VP Engineering,321829,176,32,14,Manufacturing
+MediStarSystems,vp@medistarsystems.com,VP Operations,86534,54,76,3,Healthcare
+MegaInc,director@mega.com,Director IT,32185,62,74,3,Retail
+SmartTechCorp,procurement@smarttech.com,Procurement,170151,185,22,4,Technology
+QuantumProSolutions,director@quantumprosolutions.com,Director IT,88660,167,55,3,Technology
+UniversityTechInc,chief@universitytech.com,Chief Technology Officer,155222,233,51,4,Education
+WealthTechSolutions,chief@wealthtechsolutions.com,Chief Financial Officer,499182,783,15,9,Finance
+WealthProIndustries,vp@wealthproindustries.com,VP Engineering,318126,211,65,11,Finance
+TradingStarSystems,chief@tradingstarsystems.com,Chief Technology Officer,562982,628,57,8,Finance
+AcademyStarSolutions,manager@academystarsolutions.com,Manager,94044,88,20,3,Education
+FashionStarSystems,manager@fashionstarsystems.com,Manager,38047,65,76,0,Retail
+DataPlusServices,chief@dataplusservices.com,Chief Executive Officer,440546,224,86,13,Technology
+FinSoftSolutions,chief@finsoftsolutions.com,Chief Executive Officer,525838,395,46,12,Finance
+PrecisionSoftCorp,manager@precisionsoft.com,Manager,464877,717,17,5,Manufacturing
+QuantumProCorp,vp@quantumpro.com,VP Sales,284113,317,15,4,Technology
+AdvancedStarLabs,chief@advancedstarlabs.com,Chief Information Officer,550467,341,70,5,Manufacturing
+AdvancedSoftSystems,vp@advancedsoftsystems.com,VP Sales,184698,318,30,2,Manufacturing
+DataMaxPartners,director@datamaxpartners.com,Director IT,183883,278,33,3,Technology
+InvestSystems,chief@investsystems.com,Chief Information Officer,444896,487,53,6,Finance
+CommerceTechServices,chief@commercetechservices.com,Chief Information Officer,111918,203,21,5,Retail
+QuantumPlusServices,vp@quantumplusservices.com,VP Engineering,183121,365,26,6,Technology
+AcademyTechIndustries,chief@academytechindustries.com,Chief Executive Officer,162642,258,17,5,Education
+EduPlusTechnologies,chief@eduplustechnologies.com,Chief Technology Officer,152711,256,39,6,Education
+DigitalSoftInc,vp@digitalsoft.com,VP Operations,242207,482,47,5,Technology
+SmartSystems,vp@smartsystems.com,VP Operations,120271,162,73,4,Technology
+AdvancedStarSolutions,manager@advancedstarsolutions.com,Manager,442890,749,44,5,Manufacturing
+FinPlusGroup,vp@finplusgroup.com,VP Operations,145714,197,78,2,Finance
+CyberStarGroup,chief@cyberstargroup.com,Chief Financial Officer,363208,700,60,9,Technology
+BankPlusCorp,chief@bankplus.com,Chief Executive Officer,475668,374,47,7,Finance
+TechLabs,director@techlabs.com,Director IT,153746,208,38,3,Technology
+AutoSoftLabs,chief@autosoftlabs.com,Chief Executive Officer,638823,987,57,10,Manufacturing
+BioLabs,chief@biolabs.com,Chief Financial Officer,269592,382,74,3,Healthcare
+CyberTechSystems,chief@cybertechsystems.com,Chief Technology Officer,370031,213,29,6,Technology
+AIProPartners,vp@aipropartners.com,VP Engineering,230798,455,36,3,Technology
+EduSoftSystems,director@edusoftsystems.com,Director IT,45338,31,22,0,Education
+CyberGroup,chief@cybergroup.com,Chief Technology Officer,497484,393,61,7,Technology
+RoboPlusInc,vp@roboplus.com,VP Operations,372866,631,77,7,Manufacturing
+MediSoftGroup,manager@medisoftgroup.com,Manager,207222,319,15,3,Healthcare
+LearnTechPartners,vp@learntechpartners.com,VP Sales,33343,42,78,2,Education
+BioProIndustries,chief@bioproindustries.com,Chief Information Officer,307215,226,71,9,Healthcare
+DigitalMaxSystems,vp@digitalmaxsystems.com,VP Engineering,289833,476,53,5,Technology
+DigitalGroup,chief@digitalgroup.com,Chief Technology Officer,398116,728,66,14,Technology
+AutoMaxCorp,vp@automax.com,VP Operations,177663,107,16,2,Manufacturing
+AcademyPlusSystems,chief@academyplussystems.com,Chief Financial Officer,155195,107,75,4,Education
+FashionTechSolutions,manager@fashiontechsolutions.com,Manager,89449,72,43,0,Retail
+DigitalMaxInc,chief@digitalmax.com,Chief Technology Officer,400386,402,22,14,Technology
+AutoTechSolutions,vp@autotechsolutions.com,VP Engineering,232745,359,89,6,Manufacturing
+TechMaxGroup,chief@techmaxgroup.com,Chief Executive Officer,344425,390,38,7,Technology
+DynamicSoftSystems,chief@dynamicsoftsystems.com,Chief Information Officer,184911,186,76,6,Other
+AITechIndustries,chief@aitechindustries.com,Chief Information Officer,486141,901,76,8,Technology
+SmartTechSolutions,chief@smarttechsolutions.com,Chief Technology Officer,97400,172,23,2,Retail
+EliteProSystems,vp@eliteprosystems.com,VP Engineering,48335,56,26,0,Other
+TradingMaxSystems,director@tradingmaxsystems.com,Director IT,127192,85,67,3,Finance
+PremierMaxLabs,vp@premiermaxlabs.com,VP Operations,114460,117,32,5,Other
+AutoMaxCorp,director@automax.com,Director IT,433821,673,56,13,Manufacturing
+ShopMaxInc,vp@shopmax.com,VP Engineering,74693,147,79,1,Retail
+RetailPlusSystems,chief@retailplussystems.com,Chief Financial Officer,109870,134,68,4,Retail
+DataStarIndustries,vp@datastarindustries.com,VP Engineering,54748,60,72,3,Technology
+SmartServices,vp@smartservices.com,VP Operations,289564,247,77,5,Technology
+QuantumStarCorp,chief@quantumstar.com,Chief Financial Officer,498713,258,46,9,Technology
+SmartPlusGroup,vp@smartplusgroup.com,VP Engineering,63843,39,61,0,Technology
+AIMaxCorp,vp@aimax.com,VP Operations,249938,462,71,4,Technology
+QuantumStarTechnologies,vp@quantumstartechnologies.com,VP Engineering,116203,116,50,3,Technology
+PharmaPlusInc,chief@pharmaplus.com,Chief Technology Officer,367016,326,41,10,Healthcare
+TechMaxCorp,director@techmax.com,Director IT,216619,196,27,7,Technology
+DigitalProInc,vp@digitalpro.com,VP Operations,100990,189,24,7,Technology
+OnlineGroup,chief@onlinegroup.com,Chief Financial Officer,181813,311,63,4,Education
+FinProPartners,director@finpropartners.com,Director IT,146540,87,15,6,Finance
+DigitalMaxCorp,procurement@digitalmax.com,Procurement,285365,533,37,6,Technology
+AutoProLabs,chief@autoprolabs.com,Chief Information Officer,518765,455,59,8,Manufacturing
+TechSoftTechnologies,chief@techsofttechnologies.com,Chief Executive Officer,438311,233,48,10,Technology
+CommercePlusInc,director@commerceplus.com,Director IT,44285,74,31,3,Retail
+TradingStarGroup,vp@tradingstargroup.com,VP Operations,153682,285,78,5,Finance
+PremierSoftInc,chief@premiersoft.com,Chief Financial Officer,173386,110,66,2,Other
+BankSoftIndustries,director@banksoftindustries.com,Director IT,347940,589,24,12,Finance
+RetailMaxSystems,procurement@retailmaxsystems.com,Procurement,34388,35,57,3,Retail
+HealthIndustries,vp@healthindustries.com,VP Sales,212162,150,22,5,Healthcare
+QuantumProServices,manager@quantumproservices.com,Manager,214506,322,64,6,Technology
+DataMaxGroup,chief@datamaxgroup.com,Chief Executive Officer,403081,308,35,10,Technology
+TechStarLabs,chief@techstarlabs.com,Chief Executive Officer,391865,601,87,14,Technology
+RetailPartners,vp@retailpartners.com,VP Engineering,39262,41,40,3,Retail
+RetailMaxSolutions,procurement@retailmaxsolutions.com,Procurement,20302,21,28,1,Retail
+SmartSoftTechnologies,vp@smartsofttechnologies.com,VP Operations,24621,17,21,2,Retail
+AcademySoftInc,chief@academysoft.com,Chief Executive Officer,154674,133,42,3,Education
+FinStarIndustries,chief@finstarindustries.com,Chief Executive Officer,407915,346,27,8,Finance
+CapitalTechSolutions,vp@capitaltechsolutions.com,VP Engineering,126734,174,48,2,Finance
+CapitalMaxServices,chief@capitalmaxservices.com,Chief Executive Officer,545625,770,73,12,Finance
+WealthTechGroup,chief@wealthtechgroup.com,Chief Information Officer,518357,434,84,11,Finance
+WealthTechnologies,director@wealthtechnologies.com,Director IT,255890,134,50,7,Finance
+PharmaSystems,director@pharmasystems.com,Director IT,200808,248,65,7,Healthcare
+AcademySoftTechnologies,chief@academysofttechnologies.com,Chief Executive Officer,126469,246,82,4,Education
+CyberPlusCorp,chief@cyberplus.com,Chief Technology Officer,404537,668,52,9,Technology
+BankTechSolutions,chief@banktechsolutions.com,Chief Executive Officer,550455,386,37,14,Finance
+GlobalSoftTechnologies,chief@globalsofttechnologies.com,Chief Technology Officer,151342,230,31,2,Other
+WealthProIndustries,chief@wealthproindustries.com,Chief Executive Officer,466288,828,74,6,Finance
+QuantumSoftServices,chief@quantumsoftservices.com,Chief Information Officer,424450,802,78,10,Technology
+SmartProTechnologies,director@smartprotechnologies.com,Director IT,171101,290,49,6,Technology
+DataStarLabs,chief@datastarlabs.com,Chief Executive Officer,314060,434,32,12,Technology
+WealthMaxSolutions,chief@wealthmaxsolutions.com,Chief Executive Officer,578134,669,39,5,Finance
+LearnProGroup,vp@learnprogroup.com,VP Engineering,71157,135,21,2,Education
+PharmaPlusCorp,vp@pharmaplus.com,VP Operations,206994,348,52,2,Healthcare
+BioTechIndustries,chief@biotechindustries.com,Chief Technology Officer,259029,406,19,4,Healthcare
+SmartMaxPartners,chief@smartmaxpartners.com,Chief Technology Officer,96371,114,66,3,Retail
+TradingPlusSystems,director@tradingplussystems.com,Director IT,345146,504,50,8,Finance
+IndustrialPlusGroup,chief@industrialplusgroup.com,Chief Information Officer,494153,500,20,12,Manufacturing
+MediMaxLabs,chief@medimaxlabs.com,Chief Technology Officer,349777,495,74,8,Healthcare
+OnlineMaxTechnologies,vp@onlinemaxtechnologies.com,VP Operations,82329,136,45,1,Education
+DataTechTechnologies,manager@datatechtechnologies.com,Manager,194790,133,35,3,Technology
+SmartTechIndustries,chief@smarttechindustries.com,Chief Executive Officer,143173,183,54,6,Retail
+BioSoftServices,director@biosoftservices.com,Director IT,172945,172,77,5,Healthcare
+InvestSoftPartners,vp@investsoftpartners.com,VP Engineering,108666,174,31,4,Finance
+DataStarSolutions,chief@datastarsolutions.com,Chief Information Officer,367526,275,47,5,Technology
+CommerceSoftPartners,chief@commercesoftpartners.com,Chief Technology Officer,128356,163,63,5,Retail
+PharmaTechTechnologies,chief@pharmatechtechnologies.com,Chief Executive Officer,241759,145,65,4,Healthcare
+SmartMaxCorp,chief@smartmax.com,Chief Financial Officer,97311,131,32,0,Retail
+ShopStarInc,chief@shopstar.com,Chief Financial Officer,116737,145,65,5,Retail
+SmartIndustries,vp@smartindustries.com,VP Operations,153177,138,48,5,Technology
+FashionInc,vp@fashion.com,VP Sales,75106,63,73,2,Retail
+DigitalServices,vp@digitalservices.com,VP Engineering,89986,133,22,1,Technology
+SmartStarTechnologies,director@smartstartechnologies.com,Director IT,74771,112,28,2,Retail
+MediSoftIndustries,chief@medisoftindustries.com,Chief Technology Officer,242198,429,33,5,Healthcare
+AutoTechInc,director@autotech.com,Director IT,237955,238,16,4,Manufacturing
+BankMaxSystems,chief@bankmaxsystems.com,Chief Executive Officer,492351,653,67,7,Finance
+UniversityTechTechnologies,director@universitytechtechnologies.com,Director IT,49063,97,28,0,Education
+TradingServices,chief@tradingservices.com,Chief Information Officer,508757,891,18,14,Finance
+TradingInc,vp@trading.com,VP Operations,156133,292,56,5,Finance
+CapitalMaxCorp,vp@capitalmax.com,VP Sales,228377,360,41,2,Finance
+DataSoftTechnologies,vp@datasofttechnologies.com,VP Sales,97924,74,59,0,Technology
+PharmaStarLabs,chief@pharmastarlabs.com,Chief Technology Officer,341371,661,79,7,Healthcare
+DataMaxLabs,chief@datamaxlabs.com,Chief Financial Officer,389599,729,73,11,Technology
+AutoIndustries,manager@autoindustries.com,Manager,270900,332,50,5,Manufacturing
+CyberStarCorp,manager@cyberstar.com,Manager,88890,89,40,1,Technology
+TechTechTechnologies,chief@techtechtechnologies.com,Chief Financial Officer,431132,660,56,13,Technology
+DataMaxInc,chief@datamax.com,Chief Technology Officer,320581,444,33,9,Technology
+DataMaxCorp,director@datamax.com,Director IT,86408,101,61,3,Technology
+InvestTechnologies,director@investtechnologies.com,Director IT,232822,369,84,2,Finance
+UniversityTechLabs,manager@universitytechlabs.com,Manager,57935,90,85,0,Education
+SmartSoftPartners,chief@smartsoftpartners.com,Chief Executive Officer,468270,724,23,7,Technology
+LearnMaxIndustries,vp@learnmaxindustries.com,VP Engineering,84237,49,32,2,Education
+RetailProTechnologies,vp@retailprotechnologies.com,VP Engineering,77132,47,51,2,Retail
+PharmaIndustries,director@pharmaindustries.com,Director IT,119547,201,39,6,Healthcare
+AdvancedPlusLabs,chief@advancedpluslabs.com,Chief Information Officer,603618,1000,44,11,Manufacturing
+CloudProSolutions,procurement@cloudprosolutions.com,Procurement,66371,38,76,0,Technology
+BankSoftServices,chief@banksoftservices.com,Chief Technology Officer,384574,435,19,5,Finance
+DataStarTechnologies,director@datastartechnologies.com,Director IT,213985,181,39,2,Technology
+EduTechCorp,vp@edutech.com,VP Operations,73001,123,57,3,Education
+MedicalProTechnologies,manager@medicalprotechnologies.com,Manager,99262,197,73,3,Healthcare
+OnlineMaxSolutions,chief@onlinemaxsolutions.com,Chief Technology Officer,160042,122,55,2,Education
+DynamicMaxPartners,chief@dynamicmaxpartners.com,Chief Technology Officer,222750,183,23,4,Other
+FinProLabs,vp@finprolabs.com,VP Operations,257757,514,17,4,Finance
+QuantumTechServices,manager@quantumtechservices.com,Manager,133300,84,70,4,Technology
+SmartProServices,manager@smartproservices.com,Manager,75931,41,54,0,Technology
+InvestPlusInc,chief@investplus.com,Chief Financial Officer,571271,881,62,14,Finance
+TradingMaxGroup,director@tradingmaxgroup.com,Director IT,225991,412,76,6,Finance
+AcademySoftTechnologies,vp@academysofttechnologies.com,VP Engineering,116231,197,54,5,Education
+AcademyMaxServices,director@academymaxservices.com,Director IT,56292,85,77,2,Education
+MegaTechLabs,chief@megatechlabs.com,Chief Technology Officer,137638,69,46,4,Retail
+AIPlusInc,vp@aiplus.com,VP Engineering,239004,301,53,3,Technology
+DigitalTechCorp,vp@digitaltech.com,VP Sales,213038,226,78,6,Technology
+SmartStarSolutions,chief@smartstarsolutions.com,Chief Technology Officer,111736,217,77,5,Retail
+AdvancedPlusPartners,chief@advancedpluspartners.com,Chief Information Officer,618563,588,31,10,Manufacturing
+PrecisionSoftPartners,chief@precisionsoftpartners.com,Chief Technology Officer,634893,1000,43,8,Manufacturing
+RoboMaxIndustries,chief@robomaxindustries.com,Chief Technology Officer,487813,515,46,7,Manufacturing
+AISoftLabs,chief@aisoftlabs.com,Chief Executive Officer,423395,482,27,13,Technology
+AISoftSystems,director@aisoftsystems.com,Director IT,102307,151,41,4,Technology
+DynamicPlusTechnologies,vp@dynamicplustechnologies.com,VP Operations,79214,89,73,3,Other
+HealthProGroup,chief@healthprogroup.com,Chief Executive Officer,252857,465,29,3,Healthcare
+QuantumTechCorp,vp@quantumtech.com,VP Operations,76385,137,41,3,Technology
+TechMaxCorp,director@techmax.com,Director IT,255390,301,64,5,Technology
+SmartPlusGroup,manager@smartplusgroup.com,Manager,196323,332,39,7,Technology
+TechPlusSystems,vp@techplussystems.com,VP Engineering,115455,142,77,7,Technology
+TradingProInc,procurement@tradingpro.com,Procurement,291184,150,32,7,Finance
+MedicalProPartners,vp@medicalpropartners.com,VP Operations,139288,268,55,4,Healthcare
+FinPlusCorp,procurement@finplus.com,Procurement,269631,142,68,7,Finance
+TechSoftLabs,chief@techsoftlabs.com,Chief Executive Officer,349153,454,44,5,Technology
+ShopPartners,chief@shoppartners.com,Chief Technology Officer,113398,90,29,3,Retail
+CyberProCorp,chief@cyberpro.com,Chief Technology Officer,480858,263,20,13,Technology
+QuantumSoftServices,manager@quantumsoftservices.com,Manager,152215,239,76,5,Technology
+CareProIndustries,manager@careproindustries.com,Manager,86653,149,40,2,Healthcare
+PrecisionStarLabs,chief@precisionstarlabs.com,Chief Technology Officer,691957,961,26,13,Manufacturing
+LearnSolutions,vp@learnsolutions.com,VP Engineering,100316,77,67,4,Education
+DigitalProInc,chief@digitalpro.com,Chief Information Officer,302920,375,42,14,Technology
+BioPartners,chief@biopartners.com,Chief Information Officer,352340,560,75,12,Healthcare
+PharmaPlusSystems,chief@pharmaplussystems.com,Chief Technology Officer,356400,452,50,14,Healthcare
+RoboInc,manager@robo.com,Manager,441570,613,26,7,Manufacturing
+AdvancedProCorp,director@advancedpro.com,Director IT,307795,573,56,6,Manufacturing
+SmartMaxPartners,chief@smartmaxpartners.com,Chief Financial Officer,481749,870,28,12,Technology
+BankInc,chief@bank.com,Chief Information Officer,485818,470,42,6,Finance
+OnlinePlusCorp,chief@onlineplus.com,Chief Technology Officer,132588,113,45,4,Education
+LearnPlusLabs,director@learnpluslabs.com,Director IT,72240,84,22,2,Education
+EduPlusPartners,chief@edupluspartners.com,Chief Financial Officer,155946,250,51,2,Education
+FashionPlusTechnologies,director@fashionplustechnologies.com,Director IT,38309,30,75,3,Retail
+CloudServices,chief@cloudservices.com,Chief Information Officer,300281,167,49,10,Technology
+DataTechGroup,vp@datatechgroup.com,VP Engineering,83997,128,34,0,Technology

@@ -1,0 +1,31 @@
+company_name,email,job_role,quote_value,item_count,conversion_days,past_engagements,industry
+"CloudTech Solutions Inc",cto@cloudtech-solutions.com,"Chief Technology Officer",180000,250,30,8,Technology
+"HealthCare Innovators Ltd",cio@healthcare-innovators.com,"Chief Information Officer",150000,180,45,5,Healthcare
+"Acme Manufacturing Corp",vp-eng@acme-manufacturing.com,"VP Engineering",220000,600,60,4,Manufacturing
+"Retail Express Group",manager@retail-express.com,"Manager",18000,45,20,2,Retail
+"FinTech Capital Partners",cfo@fintech-capital.com,"Chief Financial Officer",350000,200,35,12,Finance
+"EduTech Learning Systems",ceo@edutech-learning.com,"Chief Executive Officer",95000,120,40,6,Education
+"MediData Solutions",cto@medidata-solutions.com,"Chief Technology Officer",125000,160,25,7,Healthcare
+"SmartManufacturing Industries",director-it@smart-manufacturing.com,"Director IT",180000,450,55,3,Manufacturing
+"CloudBank Financial",vp-ops@cloudbank.com,"VP Operations",280000,180,42,9,Finance
+"TechStart Innovations",cio@techstart-innovations.com,"Chief Information Officer",75000,80,28,4,Technology
+"RetailHub Commerce",procurement@retailhub.com,"Procurement",22000,60,18,1,Retail
+"HealthPlus Medical Group",vp-sales@healthplus-medical.com,"VP Sales",165000,190,38,5,Healthcare
+"AutoManufacturing Systems",ceo@auto-manufacturing.com,"Chief Executive Officer",420000,850,70,6,Manufacturing
+"Digital Learning Academy",director-it@digital-academy.com,"Director IT",48000,75,32,3,Education
+"InvestBank Holdings",cto@investbank.com,"Chief Technology Officer",520000,320,48,15,Finance
+"FashionRetail Brands",manager@fashion-retail.com,"Manager",32000,85,22,2,Retail
+"BioTech Pharma Labs",cfo@biotech-pharma.com,"Chief Financial Officer",380000,210,50,8,Healthcare
+"IndustrialTech Manufacturing",vp-eng@industrial-tech.com,"VP Engineering",295000,720,65,7,Manufacturing
+"OnlineEdu Platform",cio@online-edu.com,"Chief Information Officer",68000,95,35,4,Education
+"CyberSecurity Solutions",cto@cybersec-solutions.com,"Chief Technology Officer",145000,140,27,9,Technology
+"MegaRetail Corporation",vp-ops@megaretail.com,"VP Operations",55000,110,24,3,Retail
+"CardioCare Healthcare",ceo@cardiocare.com,"Chief Executive Officer",235000,175,42,6,Healthcare
+"PrecisionManufacturing Inc",director-it@precision-mfg.com,"Director IT",198000,520,58,4,Manufacturing
+"TradingBank Systems",cio@tradingbank.com,"Chief Information Officer",475000,280,45,11,Finance
+"SmartRetail Tech",cto@smartretail-tech.com,"Chief Technology Officer",89000,130,30,5,Retail
+"UniversityTech Solutions",vp-eng@university-tech.com,"VP Engineering",112000,150,38,4,Education
+"PharmaHealth Research",cfo@pharmahealth.com,"Chief Financial Officer",310000,195,48,7,Healthcare
+"RoboManufacturing Systems",ceo@robo-manufacturing.com,"Chief Executive Officer",580000,950,75,9,Manufacturing
+"CapitalInvest Financial",vp-sales@capital-invest.com,"VP Sales",395000,240,40,10,Finance
+"DataTech Analytics",cto@datatech-analytics.com,"Chief Technology Officer",165000,185,32,8,Technology

@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+scikit-learn
+joblib
+requests
+python-dotenv
+motor
+simple-salesforce
+apscheduler
+kaggle
