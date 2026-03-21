@@ -60,12 +60,15 @@ This platform automates the entire outbound sales workflow from lead scoring to 
   - Engagement history (+5-10 points)
   - Item count analysis (+5 points)
   - ML contribution (+5-15 points)
+- **AI Lead Scoring Calculator:** A dedicated visually-rich calculator providing Expected Revenue, Complexity Factor, and Est. Time to Close projections.
 - **Real-time Filtering:** Filter by score, segment, industry, region
 - **Bulk Import:** CSV upload with automatic data validation
 - **Lead Enrichment:** AI-powered segmentation and categorization
 
 ### 📧 Email Campaigns
 - **AI Email Generation:** Personalized emails using LLaMA 3.1 via Groq
+- **Automated Email Scheduling:** Queue personalized emails for exact future delivery dates and times.
+- **Queue Management:** Manage queued emails via an intuitive "Scheduled Email Queue" — supports Send Now bypasses, soft-cancellations, and hard-deletion of processed records.
 - **Template Variables:** Dynamic content insertion (name, company, pain points)
 - **High-Value Targeting:** Automatic filtering of leads with score >60%
 - **Bulk Sending:** Send to multiple prospects simultaneously
@@ -79,6 +82,7 @@ This platform automates the entire outbound sales workflow from lead scoring to 
 
 ### 🔄 Automation
 - **Scheduled Campaigns:** Run email campaigns at optimal times
+- **Real-Time Dispatch Engine:** Robust `APScheduler` integration polling 1-minute intervals to precisely dispatch scheduled emails natively.
 - **Lead Scoring Updates:** Automatic recalculation based on new data
 - **Follow-up Sequences:** Timed multi-touch campaigns
 
