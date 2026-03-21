@@ -12,6 +12,7 @@ const api = axios.create({
 // Types
 export interface Lead {
     company_name: string;
+    email?: string;
     quote_value: number;
     item_count: number;
     conversion_days: number;

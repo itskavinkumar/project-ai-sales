@@ -98,6 +98,7 @@ export default function EmailCampaign() {
     const handleLeadSelect = (lead: Lead) => {
         setSelectedLead(lead);
         setCustomerName(lead.company_name);
+        setCustomerEmail(lead.email || '');
         setLeadScore(lead.lead_score || 0.8);
         setQuoteValue(lead.quote_value);
         setItemCount(lead.item_count);
