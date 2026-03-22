@@ -51,16 +51,19 @@ def sanitize_json_data(obj):
 
 app = FastAPI(title="AI-Based Outbound Sales Backend")
 
+
 @app.on_event("startup")
 async def startup_db_client():
     db.connect()
     # Start automation scheduler for monthly segmentation and campaigns
     automation_scheduler.start()
 
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     db.close()
     automation_scheduler.stop()
+
 
 # Add CORS middleware to allow frontend connection
 app.add_middleware(
@@ -69,7 +72,8 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:5174",
         "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174"
+        "http://127.0.0.1:5174",
+        "https://your-frontend-name.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -101,12 +105,13 @@ async def get_leads():
     # 1. Try to fetch from MongoDB first
     try:
         if db.db is not None:
-             mongo_leads = await db.get_all_leads()
-             if mongo_leads:
-                 print(f"DEBUG: Found {len(mongo_leads)} leads in Mongo")
-                 for lead in mongo_leads:
-                     if "_id" in lead: lead["_id"] = str(lead["_id"])
-                 records = mongo_leads
+            mongo_leads = await db.get_all_leads()
+            if mongo_leads:
+                print(f"DEBUG: Found {len(mongo_leads)} leads in Mongo")
+                for lead in mongo_leads:
+                    if "_id" in lead:
+                        lead["_id"] = str(lead["_id"])
+                records = mongo_leads
     except Exception as e:
         print(f"⚠️ MongoDB fetch error: {e}")
 
@@ -127,7 +132,7 @@ async def get_leads():
             leads_df = leads_df.replace([np.inf, -np.inf], None)
             leads_df = leads_df.where(pd.notna(leads_df), None)
             records = leads_df.to_dict(orient="records")
-            
+
             # Sync to Mongo
             if db.db is not None:
                 print(f"DEBUG: Syncing {len(records)} CSV leads to Mongo...")
@@ -136,7 +141,7 @@ async def get_leads():
                         clean_name = str(r["company_name"]).replace(" ", "").lower()
                         r["email"] = f"contact@{clean_name}.com"
                     try:
-                         await db.save_lead(r)
+                        await db.save_lead(r)
                     except Exception as e:
                         print(f"Failed to save CSV lead: {e}")
 
@@ -147,12 +152,12 @@ async def get_leads():
         try:
             enriched = enrich_lead_data(record)
             enriched_leads.append(enriched)
-        except Exception as e:
+        except Exception:
             enriched_leads.append(record)
-    
+
     # Sanitize data to ensure JSON compliance
     sanitized_leads = sanitize_json_data(enriched_leads)
-            
+
     print(f"DEBUG: Returning {len(sanitized_leads)} leads to frontend")
     return sanitized_leads
 
@@ -167,20 +172,17 @@ def get_use_cases():
 def find_best_use_case(lead: LeadInput):
     """Find the best use case based on lead parameters"""
     from app.segmentation import determine_maturity, assign_segment, determine_industry
-    
+
     # Infer profile from input data
     industry = determine_industry(lead.company_name)
     maturity = determine_maturity(lead.quote_value, lead.item_count)
     segment = assign_segment(industry, maturity)
-    
+
     # Find match
     use_case = match_use_case(industry, segment)
-    
-    # Write back to CRM if enabled and ID is present (mock or real)
+
+    # Write back to CRM if enabled and ID is present
     if USE_CRM and crm_client and lead.id:
-        # We don't have lead score here, so pass 0 or maybe remove that arg from update_lead_ai_data
-        # Actually update_lead_ai_data expects lead_id, lead_score, use_case
-        # Let's pass a placeholder or modify the method. For now, 0.0 is fine as placeholder.
         crm_client.update_lead_ai_data(lead.id, lead_score=0.0, use_case=use_case.title)
 
     return {
@@ -209,7 +211,6 @@ def predict_lead(lead: LeadInput):
 
 @app.post("/generate-email-llama2")
 def generate_email_llm(data: EmailInput):
-
     email = generate_email_llama2(
         customer_name=data.customer_name,
         lead_score=data.lead_score,
@@ -238,7 +239,7 @@ def send_email_endpoint(data: SendEmailInput):
         item_count=data.item_count,
         subject=data.subject
     )
-    
+
     return result
 
 
@@ -254,24 +255,24 @@ async def bulk_upload_leads(leads: List[dict]):
     """
     uploaded_count = 0
     failed = []
-    
+
     for lead in leads:
         try:
             # Enrich and segment the lead
             enriched_lead = enrich_lead_data(lead)
-            enriched_lead['last_segmented_at'] = datetime.now().isoformat()
-            
+            enriched_lead["last_segmented_at"] = datetime.now().isoformat()
+
             # Save to MongoDB
             await db.save_lead(enriched_lead)
             uploaded_count += 1
         except Exception as e:
             failed.append({"lead": lead.get("company_name", "Unknown"), "error": str(e)})
-    
+
     return {
         "success": True,
         "uploaded": uploaded_count,
         "failed": len(failed),
-        "errors": failed[:5]  # Show first 5 errors
+        "errors": failed[:5]
     }
 
 
@@ -285,33 +286,33 @@ async def run_segmentation(force_resegment: bool = False):
     - Job role (decision-maker identification)
     """
     all_leads = await db.get_all_leads()
-    
+
     if not all_leads:
         return {
             "segments_updated": 0,
             "segment_distribution": {}
         }
-    
+
     # Re-segment all leads
     segment_counts = {}
     updated = 0
-    
+
     for lead in all_leads:
         try:
             # Only re-segment if forced or never segmented
             should_segment = force_resegment or not lead.get("last_segmented_at")
-            
+
             if should_segment:
                 enriched = enrich_lead_data(lead)
-                enriched['last_segmented_at'] = datetime.now().isoformat()
+                enriched["last_segmented_at"] = datetime.now().isoformat()
                 await db.save_lead(enriched)
                 updated += 1
-                
+
                 segment = enriched.get("segment", "GENERAL")
                 segment_counts[segment] = segment_counts.get(segment, 0) + 1
         except Exception as e:
             print(f"Segmentation error for {lead.get('company_name')}: {e}")
-    
+
     return {
         "segments_updated": updated,
         "segment_distribution": segment_counts
@@ -327,10 +328,10 @@ async def create_email_campaign(campaign: CampaignCreate):
     # Fetch leads matching target segment
     all_leads = await db.get_all_leads()
     target_leads = [
-        lead for lead in all_leads 
+        lead for lead in all_leads
         if lead.get("segment") == campaign.target_segment
     ]
-    
+
     campaign_doc = {
         "name": campaign.name,
         "campaign_type": campaign.campaign_type,
@@ -344,10 +345,10 @@ async def create_email_campaign(campaign: CampaignCreate):
         "created_at": datetime.now().isoformat(),
         "target_leads": [lead.get("email") for lead in target_leads]
     }
-    
+
     # Save campaign to database
     await db.save_campaign(campaign_doc)
-    
+
     return {
         "success": True,
         "campaign_id": campaign_doc.get("_id", "pending"),
@@ -378,27 +379,27 @@ async def sync_crm_data():
             "success": False,
             "message": "CRM integration not enabled. Set USE_CRM=true in .env"
         }
-    
+
     if not crm_client.connect():
         return {
             "success": False,
             "message": "Failed to connect to CRM"
         }
-    
+
     # Fetch leads from CRM
     crm_leads = crm_client.fetch_leads(limit=500)
-    
+
     # Save to MongoDB with enrichment
     synced = 0
     for lead in crm_leads:
         try:
             enriched = enrich_lead_data(lead)
-            enriched['last_segmented_at'] = datetime.now().isoformat()
+            enriched["last_segmented_at"] = datetime.now().isoformat()
             await db.save_lead(enriched)
             synced += 1
         except Exception as e:
             print(f"CRM sync error: {e}")
-    
+
     return {
         "success": True,
         "source": "CRM",
@@ -414,10 +415,10 @@ async def get_segment_analytics():
     Used for cross-sell/upsell opportunity identification
     """
     all_leads = await db.get_all_leads()
-    
+
     if not all_leads:
         return {"total_leads": 0, "segments": {}}
-    
+
     # Calculate segment distribution
     segment_stats = {}
     for lead in all_leads:
@@ -429,15 +430,16 @@ async def get_segment_analytics():
                 "avg_lead_score": 0,
                 "top_industries": {}
             }
-        
+
         segment_stats[segment]["count"] += 1
         segment_stats[segment]["total_revenue_potential"] += lead.get("revenue_potential", 0)
         segment_stats[segment]["avg_lead_score"] += lead.get("lead_score", 0)
-        
+
         industry = lead.get("industry", "OTHER")
-        segment_stats[segment]["top_industries"][industry] = \
+        segment_stats[segment]["top_industries"][industry] = (
             segment_stats[segment]["top_industries"].get(industry, 0) + 1
-    
+        )
+
     # Calculate averages
     for segment, stats in segment_stats.items():
         if stats["count"] > 0:
@@ -445,7 +447,7 @@ async def get_segment_analytics():
             stats["avg_revenue_potential"] = round(
                 stats["total_revenue_potential"] / stats["count"], 2
             )
-    
+
     return {
         "total_leads": len(all_leads),
         "segments": segment_stats
@@ -470,16 +472,16 @@ async def schedule_email(payload: dict):
         raise HTTPException(status_code=400, detail="customer_email and scheduled_at are required")
 
     job = {
-        "customer_name":  payload.get("customer_name", "Valued Customer"),
+        "customer_name": payload.get("customer_name", "Valued Customer"),
         "customer_email": payload["customer_email"],
-        "subject":        payload.get("subject", "Exclusive IT Solutions for Your Business"),
-        "lead_score":     payload.get("lead_score", 0),
-        "quote_value":    payload.get("quote_value", 0),
-        "item_count":     payload.get("item_count", 0),
-        "scheduled_at":   payload["scheduled_at"],
-        "status":         "pending",
-        "created_at":     dt.utcnow().isoformat(),
-        "sent_at":        None,
+        "subject": payload.get("subject", "Exclusive IT Solutions for Your Business"),
+        "lead_score": payload.get("lead_score", 0),
+        "quote_value": payload.get("quote_value", 0),
+        "item_count": payload.get("item_count", 0),
+        "scheduled_at": payload["scheduled_at"],
+        "status": "pending",
+        "created_at": dt.utcnow().isoformat(),
+        "sent_at": None,
     }
 
     saved = await db.save_scheduled_email(job)
@@ -498,6 +500,7 @@ async def cancel_scheduled_email(job_id: str):
     """Cancel a pending scheduled email."""
     await db.update_scheduled_email_status(job_id, status="cancelled")
     return {"success": True, "message": f"Job {job_id} cancelled"}
+
 
 @app.delete("/emails/scheduled/{job_id}/delete")
 async def delete_scheduled_email(job_id: str):

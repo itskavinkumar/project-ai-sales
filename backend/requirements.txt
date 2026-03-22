@@ -6,6 +6,7 @@ joblib
 requests
 python-dotenv
 motor
+pymongo
 simple-salesforce
 apscheduler
 kaggle
