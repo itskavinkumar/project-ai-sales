@@ -1,16 +1,12 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import os
+import requests
 from dotenv import load_dotenv
 from app.utils import generate_email_llama2
 
 load_dotenv()
 
-EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
-EMAIL_USER = os.getenv("EMAIL_USER")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+FROM_EMAIL = os.getenv("FROM_EMAIL", "onboarding@resend.dev")
 
 
 def send_sales_email(
@@ -22,61 +18,60 @@ def send_sales_email(
     subject: str
 ):
     """
-    Generate AI-powered email content and send it via SMTP
+    Generate AI-powered email content and send it via Resend API
     """
-    
-    # Validate SMTP credentials
-    if not EMAIL_USER or not EMAIL_PASSWORD:
+
+    if not RESEND_API_KEY:
         return {
             "success": False,
-            "message": "Email credentials not configured. Please set EMAIL_USER and EMAIL_PASSWORD in .env file.",
+            "message": "RESEND_API_KEY not configured in environment variables.",
             "email_body": ""
         }
-    
-    # Generate email body using LLM
+
     email_body = generate_email_llama2(
         customer_name=customer_name,
         lead_score=lead_score,
         quote_value=quote_value,
         item_count=item_count
     )
-    
-    # Create email message
-    message = MIMEMultipart()
-    message["From"] = EMAIL_USER
-    message["To"] = customer_email
-    message["Subject"] = subject
-    
-    # Add body to email
-    message.attach(MIMEText(email_body, "plain"))
-    
+
+    html_body = f"""
+    <html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <p>{email_body.replace(chr(10), "<br>")}</p>
+      </body>
+    </html>
+    """
+
     try:
-        # Create SMTP session
-        with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as server:
-            server.starttls()  # Enable security
-            server.login(EMAIL_USER, EMAIL_PASSWORD)
-            
-            # Send email
-            server.send_message(message)
-            
-        return {
-            "success": True,
-            "message": f"Email sent successfully to {customer_email}",
-            "email_body": email_body
-        }
-    
-    except smtplib.SMTPAuthenticationError:
-        return {
-            "success": False,
-            "message": "Authentication failed. Check your email credentials.",
-            "email_body": email_body
-        }
-    except smtplib.SMTPException as e:
-        return {
-            "success": False,
-            "message": f"SMTP error occurred: {str(e)}",
-            "email_body": email_body
-        }
+        response = requests.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "from": FROM_EMAIL,
+                "to": [customer_email],
+                "subject": subject,
+                "html": html_body,
+            },
+            timeout=30,
+        )
+
+        if response.status_code in [200, 201]:
+            return {
+                "success": True,
+                "message": f"Email sent successfully to {customer_email}",
+                "email_body": email_body
+            }
+        else:
+            return {
+                "success": False,
+                "message": f"Resend API error: {response.text}",
+                "email_body": email_body
+            }
+
     except Exception as e:
         return {
             "success": False,
