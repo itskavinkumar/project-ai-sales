@@ -1,4 +1,5 @@
 import axios from 'axios';
+import emailjs from '@emailjs/browser';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -18,7 +19,6 @@ export interface Lead {
     conversion_days: number;
     lead_score?: number;
     conversion_probability?: number;
-    // Enhanced fields
     industry?: string;
     segment?: string;
     maturity_level?: string;
@@ -71,6 +71,7 @@ export interface SendEmailInput {
     item_count: number;
     subject?: string;
     use_case_id?: string;
+    email_body?: string;
 }
 
 export interface SendEmailResponse {
@@ -86,7 +87,7 @@ export interface ScheduleEmailInput {
     lead_score: number;
     quote_value: number;
     item_count: number;
-    scheduled_at: string; // ISO 8601 UTC datetime
+    scheduled_at: string;
 }
 
 export interface ScheduledEmail {
@@ -103,75 +104,142 @@ export interface ScheduledEmail {
     sent_at: string | null;
 }
 
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+const sendEmailWithEmailJS = async ({
+    customer_name,
+    customer_email,
+    subject,
+    email_body,
+}: {
+    customer_name: string;
+    customer_email: string;
+    subject: string;
+    email_body: string;
+}) => {
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+        throw new Error(
+            'EmailJS environment variables are missing. Please set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY.'
+        );
+    }
+
+    const templateParams = {
+        to_email: customer_email,
+        to_name: customer_name,
+        subject: subject,
+        message: email_body,
+        from_name: 'AI Outbound Sales',
+    };
+
+    return emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        {
+            publicKey: EMAILJS_PUBLIC_KEY,
+        }
+    );
+};
+
 // API Functions
 export const apiService = {
-    // Health check
     async healthCheck(): Promise<{ status: string }> {
         const response = await api.get('/health');
         return response.data;
     },
 
-    // Get leads from database
     async getLeads(): Promise<Lead[]> {
         const response = await api.get('/leads');
         return response.data;
     },
 
-    // Get all use cases
     async getUseCases(): Promise<UseCase[]> {
         const response = await api.get('/use-cases');
         return response.data;
     },
 
-    // Match use case to lead
     async matchUseCase(data: LeadInput): Promise<MatchResults> {
         const response = await api.post('/match-use-case', data);
         return response.data;
     },
 
-    // Predict lead score
     async predictLeadScore(data: LeadInput): Promise<LeadScoreResponse> {
         const response = await api.post('/predict', data);
         return response.data;
     },
 
-    // Generate email using LLaMA 2
     async generateEmail(data: EmailInput): Promise<{ email_body: string }> {
         const response = await api.post('/generate-email-llama2', data);
         return response.data;
     },
 
-    // Send email to customer immediately
     async sendEmail(data: SendEmailInput): Promise<SendEmailResponse> {
-        const response = await api.post('/send-email', data);
-        return response.data;
+        try {
+            let finalEmailBody = data.email_body || '';
+
+            if (!finalEmailBody) {
+                const generated = await api.post('/generate-email-llama2', {
+                    customer_name: data.customer_name,
+                    customer_email: data.customer_email,
+                    lead_score: data.lead_score,
+                    quote_value: data.quote_value,
+                    item_count: data.item_count,
+                    use_case_id: data.use_case_id,
+                });
+
+                finalEmailBody = generated.data.email_body;
+            }
+
+            const finalSubject = data.subject || 'AI-Powered Sales Outreach';
+
+            await sendEmailWithEmailJS({
+                customer_name: data.customer_name,
+                customer_email: data.customer_email,
+                subject: finalSubject,
+                email_body: finalEmailBody,
+            });
+
+            return {
+                success: true,
+                message: `Email sent successfully to ${data.customer_email}`,
+                email_body: finalEmailBody,
+            };
+        } catch (error: any) {
+            console.error('EmailJS send failed:', error);
+
+            return {
+                success: false,
+                message:
+                    error?.text ||
+                    error?.message ||
+                    'Failed to send email using EmailJS',
+                email_body: data.email_body || '',
+            };
+        }
     },
 
-    // Schedule email for later delivery
     async scheduleEmail(data: ScheduleEmailInput): Promise<{ success: boolean; job: ScheduledEmail }> {
         const response = await api.post('/emails/schedule', data);
         return response.data;
     },
 
-    // Get all scheduled emails
     async getScheduledEmails(): Promise<ScheduledEmail[]> {
         const response = await api.get('/emails/scheduled');
         return response.data;
     },
 
-    // Cancel a pending scheduled email (soft delete)
     async cancelScheduledEmail(jobId: string): Promise<{ success: boolean; message: string }> {
         const response = await api.delete(`/emails/scheduled/${jobId}`);
         return response.data;
     },
 
-    // Hard delete a scheduled email record
     async deleteScheduledEmail(jobId: string): Promise<{ success: boolean; message: string }> {
         const response = await api.delete(`/emails/scheduled/${jobId}/delete`);
         return response.data;
     },
 
-    // Send a scheduled email immediately now
     async sendScheduledEmailNow(jobId: string): Promise<{ success: boolean; message: string; status: string }> {
         const response = await api.post(`/emails/scheduled/${jobId}/send-now`);
         return response.data;
@@ -179,4 +247,3 @@ export const apiService = {
 };
 
 export default api;
-

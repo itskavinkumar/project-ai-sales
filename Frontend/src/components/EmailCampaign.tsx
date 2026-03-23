@@ -33,7 +33,6 @@ function minDatetime(): string {
     const d = new Date();
     d.setSeconds(0, 0);
     d.setMinutes(d.getMinutes() + 1);
-    // datetime-local needs YYYY-MM-DDTHH:mm
     return d.toISOString().slice(0, 16);
 }
 
@@ -83,7 +82,9 @@ export default function EmailCampaign() {
         try {
             const data = await apiService.getLeads();
             setLeads(data.filter(l => (l.lead_score || 0) > 0.6));
-        } catch (e) { console.error('Error loading leads:', e); }
+        } catch (e) { 
+            console.error('Error loading leads:', e); 
+        }
     };
 
     const loadScheduledJobs = useCallback(async () => {
@@ -91,8 +92,11 @@ export default function EmailCampaign() {
         try {
             const jobs = await apiService.getScheduledEmails();
             setScheduledJobs(jobs);
-        } catch (e) { console.error('Error loading scheduled jobs:', e); }
-        finally { setLoadingJobs(false); }
+        } catch (e) { 
+            console.error('Error loading scheduled jobs:', e); 
+        } finally { 
+            setLoadingJobs(false); 
+        }
     }, []);
 
     const handleLeadSelect = (lead: Lead) => {
@@ -109,6 +113,7 @@ export default function EmailCampaign() {
             alert('Please fill in Customer Name, Quote Value and Number of Items');
             return;
         }
+
         setGenerating(true);
         try {
             const result = await apiService.generateEmail({
@@ -121,6 +126,7 @@ export default function EmailCampaign() {
             setGeneratedEmail(result.email_body);
         } catch (e) {
             console.error('Error generating email:', e);
+            alert('Failed to generate email. Please try again.');
         } finally {
             setGenerating(false);
         }
@@ -131,9 +137,11 @@ export default function EmailCampaign() {
             setScheduleError('Please generate an email and provide a recipient email address first.');
             return;
         }
+
         setScheduling(true);
         setScheduleError(null);
         setScheduleSuccess(false);
+
         try {
             await apiService.scheduleEmail({
                 customer_name: customerName,
@@ -144,6 +152,7 @@ export default function EmailCampaign() {
                 item_count: itemCount,
                 scheduled_at: localToUtcIso(scheduledAt),
             });
+
             setScheduleSuccess(true);
             setTimeout(() => setScheduleSuccess(false), 5000);
             await loadScheduledJobs();
@@ -159,8 +168,10 @@ export default function EmailCampaign() {
             alert('Please generate an email and provide a recipient email address first.');
             return;
         }
+
         setSendingNow(true);
         setSendNowSuccess(false);
+
         try {
             const result = await apiService.sendEmail({
                 customer_name: customerName,
@@ -169,16 +180,18 @@ export default function EmailCampaign() {
                 quote_value: quoteValue,
                 item_count: itemCount,
                 subject,
+                email_body: generatedEmail,
             });
+
             if (result.success) {
                 setSendNowSuccess(true);
                 setTimeout(() => setSendNowSuccess(false), 5000);
             } else {
                 alert('Failed to send: ' + result.message);
             }
-        } catch (e) {
-            console.error(e);
-            alert('Failed to send email. Please try again.');
+        } catch (e: any) {
+            console.error('Send now error:', e);
+            alert(e?.message || 'Failed to send email. Please try again.');
         } finally {
             setSendingNow(false);
         }
@@ -189,8 +202,11 @@ export default function EmailCampaign() {
         try {
             await apiService.cancelScheduledEmail(jobId);
             await loadScheduledJobs();
-        } catch (e) { console.error(e); }
-        finally { setActioningId(null); }
+        } catch (e) { 
+            console.error(e); 
+        } finally { 
+            setActioningId(null); 
+        }
     };
 
     const handleSendJobNow = async (jobId: string) => {
@@ -200,14 +216,15 @@ export default function EmailCampaign() {
             await loadScheduledJobs();
         } catch (e: any) {
             alert(e?.response?.data?.detail || 'Failed to send now.');
-        } finally { setActioningId(null); }
+        } finally { 
+            setActioningId(null); 
+        }
     };
 
     const copyToClipboard = () => navigator.clipboard.writeText(generatedEmail);
 
     return (
         <div className="space-y-6 animate-fade-in">
-            {/* Header */}
             <div className="glass rounded-2xl p-8">
                 <h1 className="text-4xl font-bold gradient-text mb-2">Email Campaign Scheduler</h1>
                 <p className="text-gray-600">
@@ -216,21 +233,22 @@ export default function EmailCampaign() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Lead Selection */}
                 <div className="card">
                     <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                         <Target className="w-6 h-6 text-primary-500" />
                         Select High-Value Lead
                     </h3>
+
                     <div className="space-y-2 max-h-96 overflow-y-auto">
                         {leads.map((lead, index) => (
                             <div
                                 key={index}
                                 onClick={() => handleLeadSelect(lead)}
-                                className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedLead === lead
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-primary-300'
-                                    }`}
+                                className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                                    selectedLead === lead
+                                        ? 'border-primary-500 bg-primary-50'
+                                        : 'border-gray-200 hover:border-primary-300'
+                                }`}
                             >
                                 <div className="font-semibold text-gray-900">{lead.company_name}</div>
                                 <div className="text-sm text-gray-600 mt-1">
@@ -241,13 +259,15 @@ export default function EmailCampaign() {
                                 </div>
                             </div>
                         ))}
+
                         {leads.length === 0 && (
-                            <div className="text-center text-gray-500 py-8">No high-value leads available</div>
+                            <div className="text-center text-gray-500 py-8">
+                                No high-value leads available
+                            </div>
                         )}
                     </div>
                 </div>
 
-                {/* Email Configuration */}
                 <div className="lg:col-span-2 space-y-6">
                     <div className="card">
                         <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -258,47 +278,72 @@ export default function EmailCampaign() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    <User className="inline w-4 h-4 mr-1" />Customer Name
+                                    <User className="inline w-4 h-4 mr-1" />
+                                    Customer Name
                                 </label>
-                                <input type="text" value={customerName}
+                                <input
+                                    type="text"
+                                    value={customerName}
                                     onChange={e => setCustomerName(e.target.value)}
-                                    className="input" placeholder="Enter customer name" />
+                                    className="input"
+                                    placeholder="Enter customer name"
+                                />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    <AtSign className="inline w-4 h-4 mr-1" />Customer Email
+                                    <AtSign className="inline w-4 h-4 mr-1" />
+                                    Customer Email
                                 </label>
-                                <input type="email" value={customerEmail}
+                                <input
+                                    type="email"
+                                    value={customerEmail}
                                     onChange={e => setCustomerEmail(e.target.value)}
-                                    className="input" placeholder="customer@company.com" />
+                                    className="input"
+                                    placeholder="customer@company.com"
+                                />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    <DollarSign className="inline w-4 h-4 mr-1" />Quote Value ($)
+                                    <DollarSign className="inline w-4 h-4 mr-1" />
+                                    Quote Value ($)
                                 </label>
-                                <input type="number" value={quoteValue || ''}
+                                <input
+                                    type="number"
+                                    value={quoteValue || ''}
                                     onChange={e => setQuoteValue(parseFloat(e.target.value) || 0)}
-                                    className="input" placeholder="50000" />
+                                    className="input"
+                                    placeholder="50000"
+                                />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    <Package className="inline w-4 h-4 mr-1" />Number of Items
+                                    <Package className="inline w-4 h-4 mr-1" />
+                                    Number of Items
                                 </label>
-                                <input type="number" value={itemCount || ''}
+                                <input
+                                    type="number"
+                                    value={itemCount || ''}
                                     onChange={e => setItemCount(parseInt(e.target.value) || 0)}
-                                    className="input" placeholder="5" />
+                                    className="input"
+                                    placeholder="5"
+                                />
                             </div>
 
                             <div className="md:col-span-2">
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    <Mail className="inline w-4 h-4 mr-1" />Email Subject
+                                    <Mail className="inline w-4 h-4 mr-1" />
+                                    Email Subject
                                 </label>
-                                <input type="text" value={subject}
+                                <input
+                                    type="text"
+                                    value={subject}
                                     onChange={e => setSubject(e.target.value)}
-                                    className="input" placeholder="Email subject line" />
+                                    className="input"
+                                    placeholder="Email subject line"
+                                />
                             </div>
 
                             <div className="md:col-span-2">
@@ -306,32 +351,47 @@ export default function EmailCampaign() {
                                     <Target className="inline w-4 h-4 mr-1" />
                                     Lead Score: {(leadScore * 100).toFixed(1)}%
                                 </label>
-                                <input type="range" min="0" max="1" step="0.01"
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="1"
+                                    step="0.01"
                                     value={leadScore}
                                     onChange={e => setLeadScore(parseFloat(e.target.value))}
-                                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-500" />
+                                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-500"
+                                />
                             </div>
                         </div>
 
-                        <button onClick={handleGenerateEmail} disabled={generating}
-                            className="btn btn-primary w-full mt-6 flex items-center justify-center gap-2">
+                        <button
+                            onClick={handleGenerateEmail}
+                            disabled={generating}
+                            className="btn btn-primary w-full mt-6 flex items-center justify-center gap-2"
+                        >
                             {generating ? (
-                                <><Loader className="w-5 h-5 animate-spin" />Generating with AI...</>
+                                <>
+                                    <Loader className="w-5 h-5 animate-spin" />
+                                    Generating with AI...
+                                </>
                             ) : (
-                                <><Sparkles className="w-5 h-5" />Generate AI-Powered Email</>
+                                <>
+                                    <Sparkles className="w-5 h-5" />
+                                    Generate AI-Powered Email
+                                </>
                             )}
                         </button>
                     </div>
 
-                    {/* Generated Email + delivery options */}
                     {generatedEmail && (
                         <div className="card animate-slide-up">
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="text-xl font-bold flex items-center gap-2">
-                                    <Mail className="w-6 h-6 text-primary-500" />Generated Email
+                                    <Mail className="w-6 h-6 text-primary-500" />
+                                    Generated Email
                                 </h3>
                                 <button onClick={copyToClipboard} className="btn btn-outline flex items-center gap-2">
-                                    <Copy className="w-4 h-4" />Copy
+                                    <Copy className="w-4 h-4" />
+                                    Copy
                                 </button>
                             </div>
 
@@ -340,20 +400,22 @@ export default function EmailCampaign() {
                                     <div className="text-sm text-gray-600 mb-1">Subject:</div>
                                     <div className="font-semibold">{subject}</div>
                                 </div>
-                                <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">{generatedEmail}</div>
+                                <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
+                                    {generatedEmail}
+                                </div>
                             </div>
 
-                            {/* ── Delivery Options ── */}
                             <div className="mt-6 border-t border-gray-100 pt-6 space-y-4">
                                 <h4 className="font-bold text-gray-800 flex items-center gap-2">
-                                    <Send className="w-5 h-5 text-primary-500" />Delivery Options
+                                    <Send className="w-5 h-5 text-primary-500" />
+                                    Delivery Options
                                 </h4>
 
-                                {/* Schedule row */}
                                 <div className="flex flex-col md:flex-row gap-3 items-end p-4 rounded-xl border-2 border-blue-100 bg-blue-50">
                                     <div className="flex-1">
                                         <label className="block text-sm font-semibold text-blue-800 mb-1">
-                                            <CalendarClock className="inline w-4 h-4 mr-1" />Schedule Delivery
+                                            <CalendarClock className="inline w-4 h-4 mr-1" />
+                                            Schedule Delivery
                                         </label>
                                         <input
                                             type="datetime-local"
@@ -373,20 +435,28 @@ export default function EmailCampaign() {
                                         style={{ background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)', color: 'white' }}
                                     >
                                         {scheduling ? (
-                                            <><Loader className="w-4 h-4 animate-spin" />Scheduling...</>
+                                            <>
+                                                <Loader className="w-4 h-4 animate-spin" />
+                                                Scheduling...
+                                            </>
                                         ) : (
-                                            <><CalendarClock className="w-4 h-4" />Schedule Email</>
+                                            <>
+                                                <CalendarClock className="w-4 h-4" />
+                                                Schedule Email
+                                            </>
                                         )}
                                     </button>
                                 </div>
 
-                                {/* Send Now row */}
                                 <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-100 bg-gray-50">
                                     <div className="flex-1">
                                         <span className="text-sm font-semibold text-gray-700 flex items-center gap-1">
-                                            <Zap className="w-4 h-4 text-yellow-500" />Send Immediately
+                                            <Zap className="w-4 h-4 text-yellow-500" />
+                                            Send Immediately
                                         </span>
-                                        <p className="text-xs text-gray-500 mt-0.5">Bypass the scheduler — send right now.</p>
+                                        <p className="text-xs text-gray-500 mt-0.5">
+                                            Bypass the scheduler — send right now.
+                                        </p>
                                     </div>
                                     <button
                                         onClick={handleSendNow}
@@ -394,20 +464,26 @@ export default function EmailCampaign() {
                                         className="btn btn-success flex items-center gap-2 whitespace-nowrap disabled:opacity-70"
                                     >
                                         {sendingNow ? (
-                                            <><Loader className="w-4 h-4 animate-spin" />Sending...</>
+                                            <>
+                                                <Loader className="w-4 h-4 animate-spin" />
+                                                Sending...
+                                            </>
                                         ) : (
-                                            <><Send className="w-4 h-4" />Send Now</>
+                                            <>
+                                                <Send className="w-4 h-4" />
+                                                Send Now
+                                            </>
                                         )}
                                     </button>
                                 </div>
 
-                                {/* Feedback messages */}
                                 {scheduleError && (
                                     <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3 animate-slide-up">
                                         <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
                                         <p className="text-sm text-red-700">{scheduleError}</p>
                                     </div>
                                 )}
+
                                 {scheduleSuccess && (
                                     <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-3 animate-slide-up">
                                         <CheckCircle className="w-5 h-5 text-blue-600" />
@@ -419,6 +495,7 @@ export default function EmailCampaign() {
                                         </div>
                                     </div>
                                 )}
+
                                 {sendNowSuccess && (
                                     <div className="p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3 animate-slide-up">
                                         <CheckCircle className="w-5 h-5 text-green-600" />
@@ -434,7 +511,6 @@ export default function EmailCampaign() {
                 </div>
             </div>
 
-            {/* ── Scheduled Email Queue ── */}
             <div className="card">
                 <div className="flex items-center justify-between mb-5">
                     <h3 className="text-xl font-bold flex items-center gap-2">
@@ -468,7 +544,10 @@ export default function EmailCampaign() {
                             <thead className="bg-gray-50">
                                 <tr>
                                     {['Recipient', 'Subject', 'Scheduled For', 'Status', 'Actions'].map(h => (
-                                        <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        <th
+                                            key={h}
+                                            className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                        >
                                             {h}
                                         </th>
                                     ))}
@@ -478,6 +557,7 @@ export default function EmailCampaign() {
                                 {scheduledJobs.map(job => {
                                     const meta = STATUS_META[job.status] || STATUS_META.pending;
                                     const acting = actioningId === job._id;
+
                                     return (
                                         <tr key={job._id} className="hover:bg-gray-50 transition-colors">
                                             <td className="px-4 py-3">
@@ -527,7 +607,7 @@ export default function EmailCampaign() {
                                                     <div className="flex gap-2">
                                                         <button
                                                             onClick={async () => {
-                                                                if (confirm("Are you sure you want to delete this record?")) {
+                                                                if (confirm('Are you sure you want to delete this record?')) {
                                                                     setActioningId(job._id);
                                                                     try {
                                                                         await apiService.deleteScheduledEmail(job._id);
@@ -559,7 +639,6 @@ export default function EmailCampaign() {
                 )}
             </div>
 
-            {/* Feature Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <FeatureCard
                     icon={<Sparkles className="w-8 h-8" />}
